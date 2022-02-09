@@ -29,6 +29,8 @@ def add_time(tm1, tm2, wkday=None):
     if added_time > 12:
         added_time -= 12
         PmAm = 'PM'
+    elif added_time == 12:
+        PmAm = 'PM'
     elif added_time == 0:
         added_time = 12
         PmAm = 'AM'
@@ -44,8 +46,13 @@ def add_time(tm1, tm2, wkday=None):
         for key, value in weekdays.items():
             if wkday.capitalize() == value:
                 sum_wk = key + extra_days
+
         if sum_wk > 7:
-            sum_wk -= 7
+            sum_wk = extra_days
+            sum_wk = sum_wk/7
+            sum_wk = sum_wk - (sum_wk//1)
+            sum_wk = sum_wk*7
+            sum_wk = 7 - sum_wk
             wkday = weekdays[sum_wk]
         else:
             wkday = weekdays[sum_wk]
@@ -56,37 +63,35 @@ def add_time(tm1, tm2, wkday=None):
 # Conditional Print statement
     if extra_days == 1 :
         if wkday != None:
-            print(f'{added_time}:{minutes} {PmAm}, {wkday.capitalize()} (next Day)')
+            a = f'{added_time}:{minutes} {PmAm}, {wkday.capitalize()} (next day)'
         else:
-            print(f'{added_time}:{minutes} {PmAm} (next Day)')
+            a = f'{added_time}:{minutes} {PmAm} (next day)'
     elif extra_days > 1:
         if wkday != None:
-            print(f'{added_time}:{minutes} {PmAm}, {wkday.capitalize()} ({extra_days} days later)')
+            a = f'{added_time}:{minutes} {PmAm}, {wkday.capitalize()} ({extra_days} days later)'
         else:
-            print(f'{added_time}:{minutes} {PmAm} ({extra_days} days later)')
+            a = f'{added_time}:{minutes} {PmAm} ({extra_days} days later)'
     else:
         if wkday != None:
-            print(f'{added_time}:{minutes} {PmAm}, {wkday.capitalize()}')
+            a = f'{added_time}:{minutes} {PmAm}, {wkday.capitalize()}'
         else:
-            print(f'{added_time}:{minutes} {PmAm}')
-
+            a = f'{added_time}:{minutes} {PmAm}'
+    return a
 
 #Tests:
+print(add_time("11:06 PM", "2:02"))
 
-add_time("3:00 PM", "3:10")
+print(add_time("11:40 AM", "0:25"))
 
+add_time("8:16 PM", "466:02")
 
-add_time("11:30 AM", "2:32", "Monday")
+add_time("5:01 AM", "0:00")
 
+add_time("3:30 PM", "2:12", "Monday")
 
-add_time("11:43 AM", "00:20")
+add_time("2:59 AM", "24:00", "saturDay")
 
+add_time("11:59 PM", "24:05", "Wednesday")
 
-add_time("10:10 PM", "3:30")
-
-
-add_time("11:43 PM", "24:20", "tueSday")
-
-
-add_time("6:30 PM", "205:12")
+add_time("8:16 PM", "466:02", "tuesday")
 
